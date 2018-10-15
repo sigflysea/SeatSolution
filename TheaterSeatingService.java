@@ -50,25 +50,72 @@ public class TheaterSeatingService {
 	}
 
 	public void assignSeat(Seat st, Map<String, Integer> customerR) {
-		ArrayList<ArrayList<Integer>> seats = new ArrayList<ArrayList<Integer>>();
-		HashMap<String, Integer> requests = new HashMap<>();
+		Seat seat = st;
+		ArrayList<ArrayList<Integer>> seats = st.getSeat();
 		int totalS=0;
 		
 		totalS=st.getSum();
 		seats = st.getSeat();
-	    Iterator<Map.Entry<String, Integer>> iterator = requests.entrySet().iterator();
-	      while(iterator.hasNext()) {
-	         Map.Entry mentry = (Map.Entry)iterator.next();
-	         System.out.print("key is: "+ mentry.getKey() + " & Value is: ");
-	         System.out.println(mentry.getValue());
-	      }
-//		for(Map.Entry<String,Integer> entry: requests.entrySet()){
+
+		HashMap<String, Integer> requests = (HashMap<String, Integer>) customerR;
+
+//		System.out.println(totalS);
+		int reqN=0;
+		
+		for(Entry<String,Integer> entry: requests.entrySet()){
+//			System.out.println(entry.getKey()+" Sorry, we can't handle the party. ");
+			reqN=entry.getValue();
+			if(reqN>totalS){
+				System.out.println(entry.getKey()+" Sorry, we can't handle the party. ");
+				continue;
+			}
+			
+			for(int i=0; i<seats.size(); i++){
+				ArrayList<Integer> row = seats.get(i); 
+				for(int j =0; j<row.size(); j++){
+					int k =row.get(j);
+					if(reqN<=k){
+						// Give seats  
+						totalS -= reqN;
+						k-=reqN;
+						row.set(j, k);
+						seats.set(i, row);
+					}
+				}
+			}
+			
+		}
+
+		
+		//		requests.forEach(cus, req){
+//			System.out.println(cus);
+//		}
+//	    Iterator<Map.Entry<String, Integer>> iterator = requests.entrySet().iterator();
+//	      while(iterator.hasNext()) {
+//	         Map.Entry mentry = (Map.Entry)iterator.next();
+//	         System.out.print("key is: "+ mentry.getKey() + " & Value is: ");
+//	         System.out.println(mentry.getValue());
+//	      }
 //			System.out.println(" Sorry");
 //			if(entry.getValue()>totalS){
 //				System.out.println(entry.getKey()+" Sorry, we can't handle the party. ");
 //			}
 //		}
 		
+		//
+//		for(int i=0; i<all.length; i++){
+//			row = all[i].split(" ");
+//			al.add(new ArrayList<Integer>());
+////			System.out.println("FOR NOW\n"+Arrays.toString(row));
+//			for(int j=0; j<row.length; j++){
+//				al.get(i).add(Integer.parseInt(row[j]));
+//				
+////count the total of available seats 
+//				sum +=Integer.parseInt(row[j]);
+//
+//			}
+//		}
+	
 		
 	}
 }
